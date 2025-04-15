@@ -179,4 +179,4 @@ settings.ini
 auth_data.json
 test.py
 *.exe
-
+migrations/
