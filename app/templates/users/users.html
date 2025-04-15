@@ -1,0 +1,54 @@
+{% extends 'template/template.html' %}
+
+{% block title %} {{ data.title }} {% endblock %}
+{% block main %}
+    <div class="users_page">
+        <h1> {{ data.title }} </h1>
+        <a class="btn btn-primary" href="{{ url_for('admin.users_add') }}">Add user</a>
+        <p></p>
+        <form method="post">
+            <table class="models_table">
+                <thead>
+                    <tr>
+                        {% for column in data.columns if column.name not in data.columns_blocked %}
+                            <th>
+                                <div class="form-floating form-floating-filters">
+                                    <input class="form-control" name="{{ column.name }}" id="{{ column.name }}" placeholder="{{ column.name }}" value="{{ data.filter_data[column.name] }}">
+                                    <label for="{{ column.name }}">{{ column.name }}</label>
+                                 </div>
+                            </th>
+                        {% endfor %}
+                        <th><button class="btn btn-primary" type="submit">Apply</button></th>
+                    </tr>
+                    <tr>
+                        {% for column in data.columns if column.name not in data.columns_blocked %}
+                            <th>{{ column.name }}</th>
+                        {% endfor %}
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                {% if data.users %}
+                    <tbody>
+                        {% for user in data.users %}
+                            <tr>
+                                {% for column in user.__table__.columns if column.name not in data.columns_blocked %}
+                                    <td>
+                                        {{ user[column.name] if user[column.name] is not none else '' }}
+                                    </td>
+                                {% endfor %}
+                                <td>
+                                    <a class="btn btn-primary" href="{{ url_for('admin.users_edit', user_id=user.id) }}">Edit</a>
+                                    <a class="btn btn-danger"
+                                       href="{{ url_for('admin.users_delete', user_id=user.id) }}"
+                                       onclick="return confirm('Вы точно хотите удалить {{ user.username }} ({{ user.id }})?');">
+                                        X
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </form>
+    </div>
+{% endblock %}

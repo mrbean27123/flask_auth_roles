@@ -1,0 +1,21 @@
+{% extends 'template/template.html' %}
+
+{% block title %} {{ data.title }} {% endblock %}
+{% block main %}
+    <div class="login_page">
+        <form method="post">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating">
+              <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required value="{{ data.request_data.email }}">
+              <label for="email">Email address</label>
+            </div>
+            <div class="form-floating">
+              <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+              <label for="password">Password</label>
+            </div>
+            <br>
+            <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+        </form>
+    </div>
+{% endblock %}

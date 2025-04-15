@@ -1,0 +1,22 @@
+{% extends 'template/template.html' %}
+
+{% block title %} {{ data.title }} {% endblock %}
+{% block main %}
+    <div class="users_page">
+        <a class="btn btn-secondary" href="{{ url_for('admin.users') }}"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1> {{ data.title }} </h1>
+        <p></p>
+        <form method="post">
+            <div class="form-floating">
+                <input class="form-control" name="username" id="username" placeholder="Username" required {% if data.user %} value="{{ data.user.username }}"{% endif %}>
+                    <label for="username">Username</label>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" type="email" name="email" id="email" placeholder="Email" required {% if data.user %} value="{{ data.user.email }}"{% endif %}>
+                <label for="email">Email</label>
+            </div>
+            <br>
+            <button class="btn btn-primary w-100 py-2" type="submit">{% if data.user %}Change{% else %}Add user{% endif %}</button>
+        </form>
+    </div>
+{% endblock %}

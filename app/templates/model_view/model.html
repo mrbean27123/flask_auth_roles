@@ -1,0 +1,55 @@
+{% extends 'template/template.html' %}
+
+{% block title %} {{ data.title }} {% endblock %}
+{% block main %}
+    <div class="models_page">
+        <a class="btn btn-secondary" href="{{ url_for('model_view.models') }}"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1> {{ data.title }} </h1>
+        <a class="btn btn-primary" href="{{ url_for('model_view.models_add', model_name=data.title) }}">Add to {{ data.title }}</a>
+        <p></p>
+        <form method="post">
+            <table class="models_table">
+                <thead>
+                    <tr>
+                        {% for column in data.columns if column.name not in data.columns_blocked %}
+                            <th>
+                                <div class="form-floating form-floating-filters">
+                                    <input class="form-control" name="{{ column.name }}" id="{{ column.name }}" placeholder="{{ column.name }}" value="{{ data.filter_data[column.name] }}">
+                                    <label for="{{ column.name }}">{{ column.name }}</label>
+                                 </div>
+                            </th>
+                        {% endfor %}
+                        <th><button class="btn btn-primary" type="submit">Apply</button></th>
+                    </tr>
+                    <tr>
+                        {% for column in data.columns if column.name not in data.columns_blocked %}
+                            <th>{{ column.name }}</th>
+                        {% endfor %}
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                {% if data.model_data %}
+                    <tbody>
+                        {% for model in data.model_data %}
+                            <tr>
+                                {% for column in model.__table__.columns if column.name not in data.columns_blocked %}
+                                    <td>
+                                        {{ model[column.name].name if model[column.name] is not none and model[column.name]|attr('name') else model[column.name] }}
+                                    </td>
+                                {% endfor %}
+                                <td>
+                                    <a class="btn btn-primary" href="{{ url_for('model_view.models_edit', model_name=data.title, model_id=model.id) }}">Edit</a>
+                                    <a class="btn btn-danger"
+                                       href="{{ url_for('model_view.models_delete', model_name=data.title, model_id=model.id) }}"
+                                       onclick="return confirm('Вы точно хотите удалить id: {{ model.id }}?');">
+                                        X
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </form>
+    </div>
+{% endblock %}

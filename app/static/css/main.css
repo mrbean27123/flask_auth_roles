@@ -1,0 +1,48 @@
+.login_page,
+.profile_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.small-center {
+    text-align: center;
+    line-height: 0;
+}
+
+.models_table {
+    width: 100%;
+}
+
+.models_table th,
+.models_table td {
+    padding: 3px;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.models_table th {
+    background-color: #f2f2f2;
+    border-bottom: 2px solid #ddd;
+}
+
+.models_table td {
+    max-width: 200px;
+    border-bottom: 1px solid #ddd;
+}
+
+.models_table td:hover {
+    cursor: pointer;
+}
+
+.models_table td:hover {
+    background-color: #f5f5f5;
+}
+
+.form-floating-filters label {
+    opacity: 0.4;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
